@@ -1,12 +1,14 @@
 object pepe {
     var categoria = cadete
-    var bonoResultados = 0
-    var bonoPresentismo = 0
+    var bonoResultados = bonoResultadosFijo
+    var bonoPresentismo = bonoPresentismoNormal
     var faltas = 0
 
     method sueldo() {
         return categoria.neto()  + bonoResultados.monto(self) + bonoPresentismo.monto(self)
     }
+
+    //setter y getters de categoria
     method categoria() {
         return categoria 
     }
@@ -14,6 +16,8 @@ object pepe {
         categoria = _newCAtegoria
       
     }
+
+    //stter y getter de faltas
     method faltas() {
         return faltas
     }
@@ -21,8 +25,19 @@ object pepe {
         faltas = faltas + _dias
       
     }
+    // setters  de bonos
+
+    method bonoPorPresentismo(bono) {
+      bonoPresentismo = bono
+    }
+    method bonoPorResultados(bono) {
+      bonoResultados = bono
+    }
+    method neto() = categoria.sueldoNeto() 
+
+    
 }
-// ====== Categorías ======
+// Categorías 
 
 object cadete{
     const sueldoNeto = 15000
@@ -45,7 +60,7 @@ object gerente{
 // ====== Bonos por resultado ======
 object bonoResultadosPorcentaje {
     method monto(_unEmpleado) { 
-         return _unEmpleado.sueldoNeto() * 0.10
+         return _unEmpleado.neto() * 0.10
     }
 }
 
@@ -55,8 +70,8 @@ object bonoResultadosFijo {
     }
 }
 
-object bonoResultadosNulo {
-    method monto(unEmpleado) = 0
+object bonoNulo {
+    method monto() = 0
 }
 
 // ====== Bonos por presentismo ======
@@ -83,15 +98,12 @@ object bonoPresentismoAjuste {
 
 object bonoPresentismoDemagogico {
     method monto(unEmpleado) {
-        if (unEmpleado.sueldoNeto() < 18000){
+        if (unEmpleado.neto() < 18000){
              return 500
         }
         else return 300
     }
 }
 
-object bonoPresentismoNulo {
-    method monto(unEmpleado) = 0
-}
 
 // ====== Empleado (pepe) ======
