@@ -2,9 +2,58 @@ import pepe.*
 
 describe "Sueldo Pepe" {
 	
-	test "Test 1" {
-		//TODO: Implementame
+	test "Test 1: Pepe cadete,con 3 faltas , bono Resultado fijo y bono Presentismo Normal" {
+		pepe.cambiarCategoriaA(cadete)
+        pepe.bonoPorResultados(bonoResultadosFijo)
+		pepe.faltar(3)
+        pepe.bonoPorPresentismo(bonoPresentismoNormal)
+		assert.equals(20800, pepe.sueldo())
 	}
 
+	test "Test 2: pepe gerente, bno Resultado porcentaje y bono resultado nulo" {
+		pepe.cambiarCategoriaA(gerente)
+		pepe.bonoPorResultados(bonoResultadosPorcentaje)
+		pepe.bonoPorPresentismo(bonoNulo)
+		assert.equals(16500, pepe.sueldo())
+	}
+
+	test "Test 3: pepe cadete, sin faltas , bnoRes Porcentaje y bnoPres Normal"{
+		pepe.cambiarCategoriaA(cadete)
+		pepe.bonoPorResultados(bonoResultadosPorcentaje)
+		pepe.bonoPorResultados(bonoPresentismoNormal)
+		pepe.faltar(0)
+		assert.equals(24000, pepe.sueldo())
+	}
+
+	test "Test 4: pepe cadete, falto 1 dia, bnoRes Porcentaje y bnoPres Normal"{
+		pepe.cambiarCategoriaA(cadete)
+		pepe.bonoPorResultados(bonoResultadosPorcentaje)
+		pepe.faltar(1)
+		pepe.bonoPorPresentismo(bonoPresentismoNormal)
+
+		assert.equals(23000, pepe.sueldo())
+	}
+}
+describe "Sueldo Pepe,Roque y Ernesto" {
+	
+	test "Test 5: pepe y ernesto " {
+		medioTiempo.categoriaBase(cadete)
+		pepe.cambiarCategoriaA(medioTiempo)
+		assert.equals(medioTiempo, pepe.categoria())
+
+        pepe.bonoPorResultados(bonoResultadosPorcentaje)
+		pepe.faltar(1)
+        pepe.bonoPorPresentismo(bonoPresentismoDemagogico)
+	
+		roque.bonoPorResultados(bonoResultadosFijo)
+		
+		ernesto.compañero(pepe)
+		ernesto.bonoPorPresentismo(bonoPresentismoAjuste)
+
+		assert.equals(11500, pepe.sueldo() )
+		assert.equals(37800, roque.sueldo() )
+		assert.equals(10100, ernesto.sueldo() )
+	}
 	
 }
+
